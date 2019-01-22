@@ -8,7 +8,7 @@ public class Cassa extends Thread
     
     public Cassa(Cinema c){
         this.c = c;
-        numeroCassa = numeroCasseTotali++;
+        numeroCassa = ++numeroCasseTotali;
     }
     
     public void run(){
@@ -17,7 +17,7 @@ public class Cassa extends Thread
             while(residui > 0){
                 int attesa = 500 + (int)(Math.random()*1500);
                 Thread.sleep(attesa);
-                int bigliettiRichiesti = 1 + (int)(Math.random()*10);
+                int bigliettiRichiesti = 1 + (int)(Math.random()*3);
                 residui = c.vendi(bigliettiRichiesti, numeroCassa);
             }
             System.out.println("Cassa " + numeroCassa + " finito");

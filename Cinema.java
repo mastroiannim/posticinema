@@ -41,8 +41,8 @@ public class Cinema
             for(int i=0; i<casse.length; i++){
                 casse[i].join();
             }
-            System.out.println(c.postiLiberi);
-            System.out.println(c.venduti);
+            System.out.println("liberi " + c.postiLiberi);
+            System.out.println("venduti " + c.venduti);
         }catch(Exception e){
             throw new RuntimeException(e);
         }

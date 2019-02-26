@@ -12,10 +12,10 @@ public class Produttore extends Thread
     
     public void run(){
         System.out.println("produttore");
-        while (true){
+        while (monitor.getCondition()){
             int dato = 1 + (int)(Math.random()*9);
             monitor.metti(dato);
-            if(dato == 5) break;
+            if(dato == 5)  break;
         }
     }
 

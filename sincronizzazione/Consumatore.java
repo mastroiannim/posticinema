@@ -14,6 +14,7 @@ public class Consumatore extends Thread
         while (true){
             if(monitor.preleva() == 5) break;
         }
+        monitor.setCondition();
     }
 
 }

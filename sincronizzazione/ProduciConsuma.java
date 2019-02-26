@@ -2,14 +2,22 @@ package sincronizzazione;
 
 public class ProduciConsuma
 {
-    Object riempito = new String("riempito");
-    Object svuotato = new String("svuotato");
+    Boolean riempito = new Boolean(true);
+    Object svuotato = new Object();
     Integer buffer;
-         
+    public void setCondition(){
+        synchronized(svuotato){
+            riempito=false;
+            svuotato.notify();
+        }
+    }
+    public synchronized Boolean getCondition(){
+        return riempito;
+    }
     public void metti(int dato){
         try{
             synchronized (svuotato){
-                if(buffer != null){
+                if(buffer != null && riempito){
                     System.out.println("metti: buffer pieno... attendo");
                     svuotato.wait();
                 }
@@ -40,6 +48,8 @@ public class ProduciConsuma
                 System.out.println("preleva: dato " + dato + " consumato");
                 buffer = null;
                 svuotato.notify();
+                    
+                
                 System.out.println("preleva: notifico che il buffer è vuoto");
                 return dato;
             }
@@ -52,12 +62,15 @@ public class ProduciConsuma
      
         ProduciConsuma monitor = new ProduciConsuma();
         Produttore p = new Produttore(monitor);
+        Produttore p1 = new Produttore(monitor);
         Consumatore c = new Consumatore(monitor);
         System.out.println("inizio");
         p.start();
+        p1.start();
         c.start();
         
         p.join();
+        p1.join();
         c.join();
         System.out.println("fine");
     }
